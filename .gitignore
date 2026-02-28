@@ -1,0 +1,13 @@
+# Virtual Environment
+.venv
+
+# Environment Variables
+.env 
+
+# Files created by UV
+pyproject.toml
+.python-version
+uv.lock
+
+# cache files
+__pycache__

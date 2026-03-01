@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from vectorstore import FaissVectorStore
+from src.vectorstore import FaissVectorStore
 from langchain_openai import ChatOpenAI
 
 

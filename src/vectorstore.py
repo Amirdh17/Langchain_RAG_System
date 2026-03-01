@@ -4,9 +4,8 @@ import numpy as np
 import pickle
 from typing import List, Any
 from sentence_transformers import SentenceTransformer
-from embedding import EmbeddingPipeline
-from data_loader import load_all_documents
-from data_loader import move_all_files
+from src.embedding import EmbeddingPipeline
+from src.data_loader import load_all_documents, move_all_files
 
 class FaissVectorStore:
     """  
@@ -81,16 +80,25 @@ class FaissVectorStore:
             pickle.dump(self.metadata, f)
         print(f"[INFO] Saved Faiss index and metadata to {self.persist_dir}")
 
-    def load(self):
+    def load(self) -> bool:
         """  
             Loads Index and Raw chunks into self.index & self.metadata from locally stored in directory
+            Return:
+                bool, T/F -> T means able to load the vector store and F means not able to load
         """
         faiss_path = os.path.join(self.persist_dir, "faiss.index")
         meta_path = os.path.join(self.persist_dir, "metadata.pkl")
+
+        # check whether index and metadata are exists or not
+        if not (os.path.exists(faiss_path) and os.path.exists(meta_path)):
+            return False
+        
         self.index = faiss.read_index(faiss_path)
         with open(meta_path, "rb") as f:
             self.metadata = pickle.load(f)
         print(f"[INFO] Loaded Faiss index and metadata from {self.persist_dir}")
+
+        return True
 
     def search(self, query_embedding: np.ndarray, top_k: int = 5) -> List[Any]:
         """  

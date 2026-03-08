@@ -7,9 +7,14 @@ from src.search import AskLLM
 
 if __name__ == "__main__":
     """ 
+        Description
+        ===========
         This is a main function for this project. This function ask user to upload the required documents
-        into the folder "Data". If you already uploaded your files, then you can skip the document loading part by giving input as 'No' and system will automatically loads any persisted data from vector store. Once it got confirmation from user for uploading the user's files at mentioned
-        folder, it will load all files from the folder 'Data' and store them into the vector store which will persist permanently. Then it will move loaded files into 'archive' folder.
+        into the folder "Data". If you already uploaded your files, then you can skip the document loading part
+        by giving input as 'No' and system will automatically loads any persisted data from vector store. 
+        Once it got confirmation from user for uploading the user's files at mentioned folder, 
+        it will load all files from the folder 'Data' and store them into the vector store which will persist permanently. 
+        Then it will move loaded files into 'archive' folder.
         User needs to give his/her question when system ask for it and LLM provide the answer based on the content of 
         the documents loaded into vector store.
     """

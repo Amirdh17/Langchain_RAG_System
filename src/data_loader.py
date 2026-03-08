@@ -18,11 +18,15 @@ def load_all_documents(data_directory: str) -> List[Any]:
             document: List[str]
     """
     all_documents = []
+    docs_cnt = 0
     data_dir = Path(data_directory)
     print(f"[DEBUG] Data Path: {data_dir}")
 
+    # ==================================================
     # Load all pdf files into the document
+    # ==================================================
     pdf_path_list = list(data_dir.glob("**/*.pdf"))
+    docs_cnt += len(pdf_path_list)
     print(f"[DEBUG] Found {len(pdf_path_list)} pdf files: {[str(f) for f in pdf_path_list]}")
 
     for pdf_path in pdf_path_list:
@@ -41,9 +45,12 @@ def load_all_documents(data_directory: str) -> List[Any]:
             print(f"[DEBUG] Loaded {len(docs)} pdf files from {pdf_path}")
         except Exception as e:
             print(f"[ERROR] Failed to load pdf file {pdf_path} : {e}")
-    
+
+    # =================================
     # load all text files
+    # =================================
     txt_path_list = list(data_dir.glob("**/*.txt"))
+    docs_cnt += len(txt_path_list)
     print(f"[DEBUG] Found {len(txt_path_list)} text files: {[str(f) for f in txt_path_list]}")
 
     for txt_path in txt_path_list:
@@ -62,9 +69,12 @@ def load_all_documents(data_directory: str) -> List[Any]:
             print(f"[DEBUG] Loaded {len(docs)} text docs from {txt_path}")
         except Exception as e:
             print(f"[ERROR] Failed to load text file {txt_path} : {e}")
-    
+
+    # ======================================
     # Load .csv files
+    # ======================================
     csv_path_list = list(data_dir.glob("**/*.csv"))
+    docs_cnt += len(csv_path_list)
     print(f"[DEBUG] Found {len(csv_path_list)} csv files: {[str(f) for f in csv_path_list]}")
 
     for csv_path in csv_path_list:
@@ -83,9 +93,11 @@ def load_all_documents(data_directory: str) -> List[Any]:
             print(f"[DEBUG] Loaded {len(docs)} csv docs from {csv_path}")
         except Exception as e:
             print(f"[ERROR] Failed to load csv file {csv_path} : {e}")
-    
+    # ===========================================
     # Load Excel (.xlsx) files
+    # ===========================================
     xlsx_path_list = list(data_dir.glob('**/*.xlsx'))
+    docs_cnt += len(xlsx_path_list)
     print(f"[DEBUG] Found {len(xlsx_path_list)} Excel files: {[str(f) for f in xlsx_path_list]}")
 
     for xlsx_path in xlsx_path_list:
@@ -104,8 +116,11 @@ def load_all_documents(data_directory: str) -> List[Any]:
         except Exception as e:
             print(f"[ERROR] Failed to load Excel {xlsx_path}: {e}")
     
+    # ===========================================
     # Load word (.docx) files
+    # ===========================================
     docx_path_list = list(data_dir.glob('**/*.docx'))
+    docs_cnt += len(docx_path_list)
     print(f"[DEBUG] Found {len(docx_path_list)} Word files: {[str(f) for f in docx_path_list]}")
     for docx_path in docx_path_list:
         print(f"[DEBUG] Loading Word: {docx_path}")
@@ -123,8 +138,11 @@ def load_all_documents(data_directory: str) -> List[Any]:
         except Exception as e:
             print(f"[ERROR] Failed to load Word {docx_path}: {e}")
 
+    # ==================================
     # Load JSON files
+    # ==================================
     json_path_list = list(data_dir.glob('**/*.json'))
+    docs_cnt += len(json_path_list)
     print(f"[DEBUG] Found {len(json_path_list)} JSON files: {[str(f) for f in json_path_list]}")
     for json_path in json_path_list:
         print(f"[DEBUG] Loading JSON: {json_path}")
@@ -142,7 +160,7 @@ def load_all_documents(data_directory: str) -> List[Any]:
         except Exception as e:
             print(f"[ERROR] Failed to load JSON {json_path}: {e}")
         
-    print(f"[DEBUG] Total loaded documents; {len(all_documents)}")
+    print(f"[DEBUG] Total loaded documents: {docs_cnt}")
     
     return all_documents
 
@@ -174,12 +192,12 @@ def move_all_files(source_folder: str, destination_folder: str) -> None:
                 # Delete original file after successful copy
                 os.remove(source_file_path)
 
-                print(f"[INFO] Moved: {source_file_path}")
+                print(f"[INFO] Moved the file {source_file_path} to {destination_file_path}")
 
             except Exception as e:
                 print(f"[ERROR] failed while moving {source_file_path}: {e}")
 
-    print("[INFO] Loaded files are moved to archive folder successfully!")
+    
 
 if __name__ == "__main__":
     loaded_docs = load_all_documents("data")
@@ -190,4 +208,4 @@ if __name__ == "__main__":
         print(f"[DEBUG] No files found at the given path: {Path('data')}")
     
     # Once loaded, moving files to archive
-    # move_all_files("../data", "../archive")
+    move_all_files("data", "archive")

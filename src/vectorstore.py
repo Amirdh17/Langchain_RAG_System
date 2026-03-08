@@ -41,6 +41,12 @@ class FaissVectorStore:
             Args:
                 documents: List[Any] -> List of documents to embed and store them into vector store 
         """
+        # Load existing index if available
+        if self.load():
+            print("[INFO] Existing vector store found. Appending new documents...")
+        else:
+            print("[INFO] No existing vector store found. Creating a new one...")
+            
         print(f"[INFO] Building vector store from {len(documents)} raw documents...")
         emb_pipe = EmbeddingPipeline(model_name=self.embedding_model, chunk_size=self.chunk_size, chunk_overlap=self.chunk_overlap)
         chunks = emb_pipe.chunk_documents(documents)

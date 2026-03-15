@@ -46,7 +46,7 @@ if __name__ == "__main__":
     query = input("[INPUT] Hi, Please ask any question related to the documents :")
 
     # Passing query to the llm
-    response = llm.ask(query, top_k=5)
+    response = llm.ask(query, top_k=10)
 
     print(f"LLM response: {response}")
 

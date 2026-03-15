@@ -8,7 +8,7 @@ from langchain_openai import ChatOpenAI
 load_dotenv()
 
 class AskLLM:
-    def __init__(self, persist_dir: str = "faiss_store", embedding_model: str = "all-MiniLM-L6-v2", model_name: str = "deepseek/deepseek-r1-0528:free") -> None:
+    def __init__(self, persist_dir: str = "faiss_store", embedding_model: str = "all-MiniLM-L6-v2", model_name: str = "openrouter/free") -> None:
         """ 
             Contructor: Loads vectorstore and setup the LLM
             Args:
@@ -66,8 +66,7 @@ class AskLLM:
         if not context:
             return "No relevant documents found."
         
-        prompt = f"""Answer the question only using the provided context.
-                    If the answer is not present, say "I don't know". 
+        prompt = f"""Answer the question only using the provided context. 
 
                     Context:
                     {context}
@@ -85,7 +84,7 @@ class AskLLM:
 
 if __name__ == "__main__":
     llm = AskLLM()
-    print(f"[INFO] LLM response : {llm.ask('What is money market?')}")
+    print(f"[OUTPUT] LLM response : {llm.ask('What is money market?')}")
 
 
 
